@@ -31,14 +31,15 @@ page{
   flex: 1;
   height: 85rpx;
   margin-left: 30rpx;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .profile-info .name {
   height: 45rpx;
-  line-height: 45rpx;
+  line-height: 85rpx;
   color: #fff;
   font-size: 37.5rpx;
 }
@@ -194,4 +195,9 @@ page{
 
 .dialog-login .dialog-body button{
   margin-top: 30rpx;
+}
+
+.loginbtn{
+ margin-right: 100rpx;
+ height: 85rpx;
 }

@@ -29,7 +29,7 @@ Page({
 
   onUserInfoClick: function() {
     if (wx.getStorageSync('token')) {
-
+     
     } else {
       this.showLoginDialog();
     }
@@ -51,6 +51,31 @@ Page({
     // 阻止冒泡
   },
 
+  onWechatLogin(e) {
+    if (e.detail.errMsg !== 'getUserInfo:ok') {
+      if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
+        return false
+      }
+      wx.showToast({
+        title: '微信登录失败',
+      })
+      return false
+    }
+    var data = e.detail.userInfo;
+    util.login().then((res) => {
+       data["code"] = res
+       data["type"] = 200
+      return util.request(api.WxRegister,data,'POST');
+    }).then((res) => {
+      util.showlog('微信登录返回')
+      util.showlog(res)
+    }).catch((err) => {
+      util.showlog('微信失败返回')
+      util.showlog(res)
+    })
+  },
+
+/*
   onWechatLogin(e) {
     if (e.detail.errMsg !== 'getUserInfo:ok') {
       if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
@@ -88,6 +113,7 @@ Page({
     })
   },
 
+*/
   onOrderInfoClick: function(event) {
     wx.navigateTo({
       url: '/pages/ucenter/order/order',

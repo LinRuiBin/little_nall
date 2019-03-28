@@ -1,4 +1,4 @@
-const ApiRootUrl = 'http://127.0.0.1:8360/api/';
+const ApiRootUrl = 'http://127.0.0.1:5000/v1/';
 
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
@@ -59,4 +59,8 @@ module.exports = {
 
   FootprintList: ApiRootUrl + 'footprint/list',  //足迹列表
   FootprintDelete: ApiRootUrl + 'footprint/delete',  //删除足迹
+
+  
+  WxRegister: ApiRootUrl + 'client/wx_register'
+
 };
