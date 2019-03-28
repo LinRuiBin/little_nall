@@ -1,11 +1,15 @@
 const util = require('../../../utils/util.js');
 const api = require('../../../config/api.js');
 const user = require('../../../services/user.js');
+import { HTTP } from '../../../utils/_http.js'
+
+var http = new HTTP()
 const app = getApp();
 
 Page({
   data: {
     userInfo: {},
+    token:false,
     showLoginDialog: false
   },
   onLoad: function(options) {
@@ -17,7 +21,10 @@ Page({
   onShow: function() {
     this.setData({
       userInfo: app.globalData.userInfo,
+      token:app.globalData.token,
     });
+
+    this.getuserinfo();
   },
   onHide: function() {
     // 页面隐藏
@@ -52,6 +59,8 @@ Page({
   },
 
   onWechatLogin(e) {
+
+    let that = this
     if (e.detail.errMsg !== 'getUserInfo:ok') {
       if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
         return false
@@ -62,58 +71,70 @@ Page({
       return false
     }
     var data = e.detail.userInfo;
-    util.login().then((res) => {
-       data["code"] = res
-       data["type"] = 200
-      return util.request(api.WxRegister,data,'POST');
-    }).then((res) => {
-      util.showlog('微信登录返回')
-      util.showlog(res)
-    }).catch((err) => {
-      util.showlog('微信失败返回')
-      util.showlog(res)
-    })
-  },
-
-/*
-  onWechatLogin(e) {
-    if (e.detail.errMsg !== 'getUserInfo:ok') {
-      if (e.detail.errMsg === 'getUserInfo:fail auth deny') {
-        return false
-      }
-      wx.showToast({
-        title: '微信登录失败',
-      })
-      return false
-    }
-    util.login().then((res) => {
-      return util.request(api.AuthLoginByWeixin, {
-        code: res,
-        userInfo: e.detail
-      }, 'POST');
-    }).then((res) => {
-      console.log(res)
-      if (res.errno !== 0) {
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          data["code"] = res.code
+          data["type"] = 200
+          that.registerForServer(data);
+        } else {
+          wx.showToast({
+            title: '微信登录失败',
+          })
+        }
+      },
+      fail: function (err) {
         wx.showToast({
           title: '微信登录失败',
         })
-        return false;
       }
-      // 设置用户信息
-      this.setData({
-        userInfo: res.data.userInfo,
-        showLoginDialog: false
-      });
-      app.globalData.userInfo = res.data.userInfo;
-      app.globalData.token = res.data.token;
-      wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
-      wx.setStorageSync('token', res.data.token);
-    }).catch((err) => {
-      console.log(err)
-    })
+    });
   },
 
-*/
+registerForServer:function(data){
+  let that = this
+  var params = {
+    url: api.WxRegister,
+    data: data,
+    type: 'POST',
+    sCallback: function (data) {
+      // wx.setStorageSync('token', data.token)
+      if (data["code"] == 200) {
+        // 设置用户信息
+        that.setData({
+          userInfo: data.data.userInfo,
+          showLoginDialog: false,
+          token: data.data.token
+        });
+        app.globalData.userInfo = data.data.userInfo;
+        app.globalData.token = data.data.token;
+        wx.setStorageSync('userInfo', JSON.stringify(data.data.userInfo));
+        wx.setStorageSync('token', data.data.token);
+        wx.showToast({
+          title: '登录成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }else{
+        wx.showToast({
+          title: data.msg,
+          icon: 'cancel',
+          duration: 2000
+        })
+      }
+    },
+    eCallback: function (e) {
+      wx.showToast({
+        title: '登录失败',
+        icon: 'cancel',
+        duration: 2000
+      })
+    }
+  }
+  http.request(params)
+},
+
+
   onOrderInfoClick: function(event) {
     wx.navigateTo({
       url: '/pages/ucenter/order/order',
@@ -141,5 +162,39 @@ Page({
       }
     })
 
+  },
+  getuserinfo:function(){
+    let that = this
+    var params = {
+      url: 'user',
+      data: {},
+      type: 'GET',
+      sCallback: function (data) {
+        // wx.setStorageSync('token', data.token)
+        if (data["code"] == 200) {
+          wx.showToast({
+            title: '获取个人陈工',
+            icon: 'cancel',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '获取个人失败',
+            icon: 'cancel',
+            duration: 2000
+          })
+        }
+      },
+      eCallback: function (e) {
+        wx.showToast({
+          title: '获取个人信息',
+          icon: 'cancel',
+          duration: 2000
+        })
+      }
+    }
+    http.request(params)
   }
+  
+
 })
