@@ -170,27 +170,18 @@ registerForServer:function(data){
       data: {},
       type: 'GET',
       sCallback: function (data) {
-        // wx.setStorageSync('token', data.token)
         if (data["code"] == 200) {
-          wx.showToast({
-            title: '获取个人陈工',
-            icon: 'cancel',
-            duration: 2000
-          })
-        } else {
-          wx.showToast({
-            title: '获取个人失败',
-            icon: 'cancel',
-            duration: 2000
-          })
-        }
+          that.setData({
+            userInfo: data.data.userInfo,
+            showLoginDialog: false,
+            token:wx.getStorageSync('token')
+          });
+          app.globalData.userInfo = data.data.userInfo;
+          wx.setStorageSync('userInfo', JSON.stringify(data.data.userInfo));
+        } 
       },
       eCallback: function (e) {
-        wx.showToast({
-          title: '获取个人信息',
-          icon: 'cancel',
-          duration: 2000
-        })
+       
       }
     }
     http.request(params)

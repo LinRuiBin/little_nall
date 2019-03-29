@@ -54,13 +54,13 @@ class Token {
           success: function (res) {
             wx.setStorageSync('token', res.data.token);
             if(res.statusCode != 201){
+              console.log('微信用户尚未授权登录')
               wx.showToast({
-                title: '尚未授权登录',
-                duration:2000
+                title: '尚未授权,请先进行授权登录',
+                duration:3000,
+                icon:"cancel"
               })
-              wx.switchTab({
-                url: '../pages/ucenter/index'
-              })
+
             }
             callBack && callBack(res.data.token);
           }

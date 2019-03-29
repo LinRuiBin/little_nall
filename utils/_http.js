@@ -25,7 +25,8 @@ class HTTP {
       data: params.data,
       method: params.type,
       header: {
-        'content-type': 'application/json',
+         'content-type': 'application/json',
+       // 'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Basic ' + base64_encode(
           wx.getStorageSync('token') + ':')
       },
@@ -62,7 +63,9 @@ class HTTP {
   _refetch(param) {
     var token = new Token();
     token.getTokenFromServer((token) => {
-      this.request(param, true);
+      if(token){
+        this.request(param, true);
+      }
     });
   }
 };

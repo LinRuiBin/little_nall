@@ -21,7 +21,8 @@ class HTTP {
       data: params.data,
       method: params.type,
       header: {
-        'content-type': 'application/json',
+        'content-type': 'application/json', //json字符串 
+        // 'Content-Type': 'application/x-www-form-urlencoded', //表单
         'Authorization': 'Basic ' + base64_encode(
           wx.getStorageSync('token') + ':')
       },
