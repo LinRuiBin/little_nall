@@ -99,16 +99,16 @@ registerForServer:function(data){
     type: 'POST',
     sCallback: function (data) {
       // wx.setStorageSync('token', data.token)
-      if (data["code"] == 200) {
+      if (data["status"] == 1) {
         // 设置用户信息
         that.setData({
-          userInfo: data.data.userInfo,
+          userInfo: data.data.userinfo,
           showLoginDialog: false,
           token: data.data.token
         });
-        app.globalData.userInfo = data.data.userInfo;
+        app.globalData.userInfo = data.data.userinfo;
         app.globalData.token = data.data.token;
-        wx.setStorageSync('userInfo', JSON.stringify(data.data.userInfo));
+        wx.setStorageSync('userInfo', JSON.stringify(data.data.userinfo));
         wx.setStorageSync('token', data.data.token);
         wx.showToast({
           title: '登录成功',
@@ -170,14 +170,14 @@ registerForServer:function(data){
       data: {},
       type: 'GET',
       sCallback: function (data) {
-        if (data["code"] == 200) {
+        if (data["status"] == 1) {
           that.setData({
-            userInfo: data.data.userInfo,
+            userInfo: data.data.userinfo,
             showLoginDialog: false,
             token:wx.getStorageSync('token')
           });
-          app.globalData.userInfo = data.data.userInfo;
-          wx.setStorageSync('userInfo', JSON.stringify(data.data.userInfo));
+          app.globalData.userInfo = data.data.userinfo;
+          wx.setStorageSync('userinfo', JSON.stringify(data.data.userinfo));
         } 
       },
       eCallback: function (e) {

@@ -1,5 +1,6 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/catalog/catalog",
     "pages/newGoods/newGoods",
@@ -16,6 +17,7 @@
     "pages/auth/login/login",
     "pages/auth/register/register",
     "pages/auth/reset/reset",
+    "pages/auth/wxlogin/wxlogin",
     "pages/pay/pay",
     "pages/payResult/payResult",
     "pages/ucenter/index/index",
@@ -38,7 +40,7 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "印生活-林瑞彬",
-    "navigationBarTextStyle": "black", 
+    "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
   },
   "tabBar": {
@@ -53,7 +55,6 @@
         "selectedIconPath": "static/images/ic_menu_choice_pressed.png",
         "text": "首页"
       },
-    
       {
         "pagePath": "pages/catalog/catalog",
         "iconPath": "static/images/ic_menu_sort_nor.png",

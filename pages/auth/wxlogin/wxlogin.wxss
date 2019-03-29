@@ -1,0 +1,21 @@
+/* pages/auth/wxlogin/wxlogin.wxss */
+
+page{
+  height: 100%;
+}
+
+.container{
+width: 100%;
+height: 100%;
+/* background-color: gray; */
+display:flex;
+flex-direction: row;
+flex-wrap: wrap;
+align-items:center;
+}
+
+.loginbtn{
+margin-left: 50rpx;
+margin-right: 50rpx;
+flex: 1;
+}

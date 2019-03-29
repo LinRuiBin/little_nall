@@ -1,0 +1,6 @@
+<!--pages/auth/wxlogin/wxlogin.wxml-->
+<!-- <text>hello</text> -->
+<view class='container'>
+
+ <button class='loginbtn' type="primary" open-type="getUserInfo" bindgetuserinfo="onWechatLogin" wx:if="{{!token}}">授权登录</button>
+</view>
