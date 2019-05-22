@@ -61,6 +61,7 @@ module.exports = {
   FootprintDelete: ApiRootUrl + 'footprint/delete',  //删除足迹
 
   
-  WxRegister: 'client/wx_register'
-
+  WxRegister: 'client/wx_register',//注册
+  TextWxPush: 'test/wxpush', //微信推送
+  FormId:'test/formid', //上传formid
 };

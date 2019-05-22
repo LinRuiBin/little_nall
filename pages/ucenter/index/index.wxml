@@ -77,8 +77,17 @@
         <text class="txt">意见反馈</text>
       </navigator>
     </view>
+    <view class="item item-bottom">
+      <text class="icon feedback" bindtap='testClick'></text>
+      <text class="txt">测试接口</text>
+    </view>
   </view>
+   
+<form name='pushMsgFm' report-submit='true' bindsubmit='getFormID'>
+      <button form-type="submit" class="zan-btn zan-btn--large zan-btn--danger payButton">有本事点我啊~~~</button>
+      </form>
 
+  
   <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
 </view>
 

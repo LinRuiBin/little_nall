@@ -42,6 +42,33 @@ Page({
     }
   },
 
+  getFormID: function (e) {
+    // this.setData({
+    //   formId: e.detail.formId
+    // })
+
+    var data ={ }
+    let formid = e.detail.formId
+    data['formid'] = formid
+    var params = {
+      url: api.FormId,
+      data: data,
+      type: 'POST',
+      sCallback: function (result) {
+        // wx.setStorageSync('token', data.token)
+        if (result["status"] == 1) {
+
+        } else {
+
+        }
+      },
+      eCallback: function (e) {
+      }
+    }
+    http.request(params)
+    
+  },
+
   showLoginDialog() {
     this.setData({
       showLoginDialog: true
@@ -141,7 +168,27 @@ registerForServer:function(data){
     })
   },
 
+  testClick:function(){
+    // let that = this
+    var params = {
+      url: api.TextWxPush,
+      data: {},
+      type: 'POST',
+      sCallback: function (result) {
+        // wx.setStorageSync('token', data.token)
+        if (result["status"] == 1) {
+
+        } else {
+
+        }
+      },
+      eCallback: function (e) {
+      }
+    }
+    http.request(params)
+  },
   onSectionItemClick: function(event) {
+   
 
   },
 
